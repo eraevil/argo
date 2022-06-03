@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CesiumJS</title>
+    {% load static %}
+    <!--css 引用区-->
+    <link rel="stylesheet" href="{% static 'libs/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/Cesium/Widgets/widgets.css' %}">
+    <!--js 引用区-->
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'libs/Cesium/Cesium.js' %}"></script>
+    <!--自定义js-->
+    <script src="{% static 'js/cesiumini.js' %}"></script>
+{#    <script src="{% static 'js/controlPanel.js' %}"></script>#}
+    <style>
+        .shadow {
+			-webkit-box-shadow: #b2b2b2 4px -2px 40px 12px;
+			-moz-box-shadow: #b2b2b2 4px -2px 40px 12px;
+			box-shadow: #b2b2b2 4px -2px 40px 12px;
+		}
+
+        .controlPanel{
+            margin:15px;
+            height: 100px;
+            width: 32%;
+            background: white;
+            border-radius: 5px 5px 5px 5px;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+<!--展示三维地球-->
+<div id="cesiumContainer" class="vh-100"></div>
+<div class="controlPanel fixed-top shadow" draggable="true">
+    <form>
+        <h4 style="text-align:center;margin-top:10px" >Argo浮标观测数据可视化系统</h4>
+        <p style="float:left;line-height:28px;margin-left:15px; ">选项:</p>
+        <select name="featuretype" id="featuretype" style="margin-left:10px; height:28px;">
+            <option value="none">请选择</option>
+            <option value="temp">温度</option>
+            <option value="salt">盐度</option>
+            <option value="ild">等温层深度</option>
+            <option value="mld">混合层深度</option>
+            <option value="cmld">合成混合层深度</option>
+        </select>
+        <input type="month" id="yyyymm">
+        <input type="submit" value="确定">
+        <input type="reset" value="重置">
+    </form>
+</div>
+
+
+</body>
+</html>

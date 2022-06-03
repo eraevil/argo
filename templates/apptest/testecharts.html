@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>testecharts</title>
+
+    {% load static %}
+    <script src="{% static 'libs/echarts/echarts/echarts.js' %}"></script>
+</head>
+
+<body>
+<div id="divchart" style="width: 600px;height:400px;">
+
+</div>
+
+
+</body>
+
+<script>
+    let divchart = document.getElementById('divchart');
+    let chart = echarts.init(divchart);
+    let option = {
+        title: {text: 'Argo 温盐曲线'},
+        tooltip: {trigger: 'axis'},
+        legend: {},
+        xAxis: {id: 'xaxis'},
+        yAxis: {},
+        dataZoom:{type: 'inside'},
+        series:[
+            {
+                name: '温度',
+                type: 'line',
+                data: {{ temp }}
+            },
+            {
+                name: '盐度',
+                type: 'line',
+                data: {{ salt }}
+            }
+        ]
+    };
+    chart.setOption(option)
+</script>
+</html>

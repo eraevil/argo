@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ pagetitle }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</head>
+<body>
+<p>嗯哼嗯哼嗯哼</p>
+{{ pagetitle }}
+
+<table>
+    {% for argofloat in argofloats %}
+        <tr>
+            <td>{{ argofloat.platformnumber }}</td>
+            <td>{{ argofloat.projectname }}</td>
+            <td>{{ argofloat.longitude }}</td>
+            <td>{{ argofloat.latitude }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+</body>
+</html>

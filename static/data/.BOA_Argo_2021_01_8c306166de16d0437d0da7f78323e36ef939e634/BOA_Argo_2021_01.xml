@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Indexer>
+    <coverages>
+        <coverage>
+            <schema name="ILD">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date</attributes>
+            </schema>
+            <origName>ILD</origName>
+            <name>ILD</name>
+        </coverage>
+        <coverage>
+            <schema name="temp">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date,pres:java.lang.Float</attributes>
+            </schema>
+            <origName>temp</origName>
+            <name>temp</name>
+        </coverage>
+        <coverage>
+            <schema name="salt">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date,pres:java.lang.Float</attributes>
+            </schema>
+            <origName>salt</origName>
+            <name>salt</name>
+        </coverage>
+        <coverage>
+            <schema name="MLD">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date</attributes>
+            </schema>
+            <origName>MLD</origName>
+            <name>MLD</name>
+        </coverage>
+        <coverage>
+            <schema name="temp_scatter_error">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date,pres:java.lang.Float</attributes>
+            </schema>
+            <origName>temp_scatter_error</origName>
+            <name>temp_scatter_error</name>
+        </coverage>
+        <coverage>
+            <schema name="salt_scatter_error">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date,pres:java.lang.Float</attributes>
+            </schema>
+            <origName>salt_scatter_error</origName>
+            <name>salt_scatter_error</name>
+        </coverage>
+        <coverage>
+            <schema name="CMLD">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date</attributes>
+            </schema>
+            <origName>CMLD</origName>
+            <name>CMLD</name>
+        </coverage>
+    </coverages>
+</Indexer>

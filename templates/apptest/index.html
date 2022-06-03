@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CesiumJS</title>
+    {% load static %}
+    <!--css 引用区-->
+    <link rel="stylesheet" href="{% static 'libs/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/Cesium/Widgets/widgets.css' %}">
+    <!--js 引用区-->
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'libs/Cesium/Cesium.js' %}"></script>
+    <script src="{% static 'libs/echarts/echarts/echarts.js' %}"></script>
+    <!--自定义js-->
+    <script src="{% static 'js/cesiumini.js' %}"></script>
+<!--    <script src="js/controlPanel.js"></script>-->
+    <style>
+        .shadow {
+			-webkit-box-shadow: #b2b2b2 4px -2px 40px 12px;
+			-moz-box-shadow: #b2b2b2 4px -2px 40px 12px;
+			box-shadow: #b2b2b2 4px -2px 40px 12px;
+		}
+
+        .controlPanel{
+            margin:15px;
+            height: 200px;
+            width: 32%;
+            background: white;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+        .chartPanel{
+            margin: 15px;
+            margin-top:225px;
+            height: 300px;
+            width: 610px;
+            background: white;
+            border-radius: 5px 5px 5px 5px;
+            position: absolute;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+<!--展示三维地球-->
+<div id="cesiumContainer" class="vh-100"></div>
+<div class="controlPanel fixed-top shadow" draggable="true">
+    <div style="height: 50px">
+        <form>
+            <h4 style="text-align:center;margin-top:10px" >Argo浮标观测数据可视化系统</h4>
+            <p style="float:left;line-height:28px;margin-left:15px; ">可视选项:</p>
+            <select name="featuretype" id="featuretype" style="margin-left:10px; height:28px;">
+                <option value="float">浮标</option>
+                <option value="temp">温度</option>
+                <option value="salt">盐度</option>
+                <option value="ild">等温层深度</option>
+                <option value="mld">混合层深度</option>
+                <option value="cmld">合成混合层深度</option>
+            </select>
+            <input type="month" id="yyyymm">
+            <input type="button" value="确定" onclick="changeSurface()">
+            <input type="reset" value="重置" >
+        </form>
+    </div>
+
+    <div style="margin-top:25px;position: absolute; height: 30px;">
+        <p style="float:left;line-height:28px;margin-left:15px;">温盐曲线:</p>
+        <input type="number" placeholder="浮标编号,如2900322" id="platformnumber" style="margin-left:15px;float:left; height:28px;width: 171px" oninput="value=value.replace(/[^\d]/g,'')">
+        <input type="number" placeholder="周期，如 1" id="cyclenumber" style="margin-left:5px;float:left; height:28px;width: 100px" oninput="value=value.replace(/[^\d]/g,'')">
+        <input type="button" value="显示" id="btn" onclick="draw()" style="margin-left:5px;">
+        <input type="button" value="清除" id="clear" onclick="clearChart()">
+    </div>
+
+    <div style="margin-top:65px;position: absolute; height: 30px;">
+        <p style="float:left;line-height:28px;margin-left:15px;">浮标轨迹:</p>
+        <input type="number" placeholder="浮标编号,如5906039" id="platformname" style="margin-left:15px;float:left; height:28px;width: 171px" oninput="value=value.replace(/[^\d]/g,'')">
+{#        <input type="number" placeholder="周期，如 1" id="cyclenumber" style="margin-left:5px;float:left; height:28px;width: 100px" oninput="value=value.replace(/[^\d]/g,'')">#}
+        <input type="button" value="显示" id="btn5" style="margin-left:5px;">
+        <input type="button" value="清除" id="clear" onclick="clearChart()">
+    </div>
+</div>
+<div class="chartPanel fixed-top shadow" id="divchart" style="display: none"></div>
+
+
+
+
+</body>
+
+<script>
+
+    function changeSurface()
+    {
+        {#viewer.imageryLayers.remove(wms)#}
+        let featuretype = $('#featuretype').val()
+        let dateX = $('#yyyymm').val()
+        if (featuretype != 'float' && dateX != ''){
+            layersname = 'argoproject:boa' + dateX.substring(0,4) + dateX.substring(5,7) + featuretype +'0'
+            console.log(layersname)
+            viewer.imageryLayers.removeAll();
+            let url = 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer';
+            let esri = new Cesium.ArcGisMapServerImageryProvider({url: url});
+            viewer.imageryLayers.addImageryProvider(esri);
+            console.log('argoproject:boa'+featuretype)
+            let nclayer = new Cesium.WebMapServiceImageryProvider({
+                url: 'http://127.0.0.1:8080/geoserver/argoproject/wms',
+                layers: layersname,//
+                enablePickFeatures: true,
+        //        rectangle: Cesium.Rectangle.fromDegrees(96, 0, 153, 30),
+                parameters: {
+                    service: 'WMS',
+                    version: '1.1.0',
+                    transparent: true,
+                    format: 'image/png',
+                    styles: 'argoproject:boa'+featuretype,
+                }
+            });
+            viewer.imageryLayers.addImageryProvider(nclayer);
+        }else{
+            let wms = new Cesium.WebMapServiceImageryProvider({
+                url: 'http://127.0.0.1:8080/geoserver/argoproject/wms',
+                layers: 'argoproject:argometa',
+                parameters: {
+                    service: 'WMS',
+                    transparent: true,
+                    format: 'image/png',
+                },
+            });
+           viewer.imageryLayers.addImageryProvider(wms);
+        }
+    }
+
+    // 画温盐曲线
+    function draw(){
+        //http://127.0.0.1:8000/argopath/6902847/5906039
+        let platformnumber = $(`#platformnumber`).val();
+        let cyclenumber = $(`#cyclenumber`).val();
+        let url = `/getTemAndSalt/${platformnumber}/${cyclenumber}`;
+        let divchart = document.getElementById('divchart');
+        let chart = echarts.init(divchart);
+        $('#divchart').css("display","block")
+        $.ajax(
+        {
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                let temp,salt;
+                temp = data.temp;
+                salt = data.salt;
+                {#console.log(temp,salt)#}
+                {#let divchart = document.getElementById('divchart');#}
+                let option = {
+                    title: {text: 'Argo 温盐曲线'},
+                    tooltip: {trigger: 'axis'},
+                    legend: {},
+                    xAxis: {id: 'xaxis'},
+                    yAxis: {},
+                    dataZoom:{type: 'inside'},
+                    series:[
+                        {
+                            name: '温度',
+                            type: 'line',
+                            data: temp
+                        },
+                        {
+                            name: '盐度',
+                            type: 'line',
+                            data:  salt
+                        }
+                    ]
+                };
+                chart.setOption(option,true)
+            },
+            error: function (data) {
+                console.log('error');
+            }
+        })
+    }
+    function clearChart(){
+        $(`#platformnumber`).val("")
+        $(`#cyclenumber`).val("")
+        viewer.entities.removeAll();
+        $('#divchart').css("display","none")
+    }
+
+    // 添加点实体
+    function addpointentity(name, longitude, latitude, alitude = 0, pixelsize = 30, color = Cesium.Color.fromRandom()) {
+        let options = {
+            name: name,
+            position: Cesium.Cartesian3.fromDegrees(longitude, latitude, alitude),
+            point: {
+                pixelSize: pixelsize,
+                color: color,
+                outlineColor: Cesium.Color.WHITE,
+                outlineWidth: 1
+            }
+        };
+        let entiy = viewer.entities.add(options);
+        {#return entiy;#}
+    }
+    // 添加线
+    function addpolyline(name, positions, width, color = Cesium.Color.fromRandom(), arctype = Cesium.ArcType.GEODESIC) {
+        let options = {
+            name: name,
+            polyline: {
+                positions: Cesium.Cartesian3.fromDegreesArrayHeights(positions),
+                width: width,
+                arcType: arctype,//Cesium.ArcType.NONE,
+                material: new Cesium.PolylineArrowMaterialProperty(color)
+            }
+        };
+        let entity = viewer.entities.add(options);
+        {#return entity;#}
+    }
+    $('#btn5').on('click', function () {
+        clearChart()
+        //http://127.0.0.1:8000/argopath/6902847/5906039
+        let platformname = $(`#platformname`).val();
+        let url = `/argopath/${platformname}`;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                viewer.entities.removeAll();
+                result = data.result;
+                let name, longitude, latitude;
+                let positions = [];
+                for (let item in result) {
+                    // console.log(result[item]);
+                    name = result[item].cyclenumber;
+                    longitude = result[item].longitude;
+                    latitude = result[item].latitude;
+                    // console.log(name,longitude,latitude);
+                    addpointentity(
+                        name, longitude, latitude, 0, item,
+                        Cesium.Color.fromRandom()
+                    );
+                    positions.push(parseFloat(longitude), parseFloat(latitude), 0);
+                }
+                let destination = Cesium.Cartesian3.fromDegrees(longitude, latitude, 50000);
+                camera.flyTo({destination: destination});
+                console.log(positions);
+                addpolyline(platformname, positions, 10, Cesium.Color.WHITE);
+            },
+            error: function (data) {
+                console.log('error');
+            }
+        }
+    )
+})
+
+
+</script>
+
+</html>
