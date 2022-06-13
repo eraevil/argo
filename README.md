@@ -1,5 +1,5 @@
-# argo
-基于WebGIS技术实现Argo浮标观测数据的可视化
+# Argo浮标观测数据可视化系统
+基于WebGIS、Django实现Argo浮标观测数据的可视化
 
 > 项目使用的软件和环境版本
 
@@ -35,6 +35,9 @@
 2|端口号port|5432
 3|数据库名dbname|'argodb'
 4|用户名user|'postgres'
+
+<img src="https://user-images.githubusercontent.com/35321279/173281720-fa595bf6-16ab-4eee-b552-a37460aa355a.png" alt="数据库E-R图"/>
+
 
 
 > 构建项目
@@ -76,16 +79,16 @@ argo
 > 效果图
 
 <div align=center>
-<img src="https://user-images.githubusercontent.com/35321279/173275549-cee5022e-e3fb-45cf-9fa8-5a907fc63b9e.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275566-9e1b0f76-4bf7-43c5-8159-cd957925ef5c.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275594-9f75f6fe-f8b1-49f6-aca4-cdf62c8ab658.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275620-d65d2608-d872-417d-bdf1-8fedf68d5f44.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275634-fd143e71-6bbc-4c59-a9e8-ffcfb468de43.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275647-5f33d270-eef2-444a-a763-d6d88aa5d400.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275656-05a97794-b709-4253-ae1d-4869a406690c.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275674-6b9a903f-b270-4796-b55e-af809d677c26.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275683-8061c6a3-16d7-4455-bb13-685e56f43a9e.png" width="100%" height="" />
-<img src="https://user-images.githubusercontent.com/35321279/173275690-5a26b6a1-6512-4e6b-b26a-314832f7e839.png" width="100%" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275549-cee5022e-e3fb-45cf-9fa8-5a907fc63b9e.png" width="100%" alt="首页" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275566-9e1b0f76-4bf7-43c5-8159-cd957925ef5c.png" width="100%" alt="首页" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275594-9f75f6fe-f8b1-49f6-aca4-cdf62c8ab658.png" width="100%" alt="效果图" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275620-d65d2608-d872-417d-bdf1-8fedf68d5f44.png" width="100%" alt="效果图" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275634-fd143e71-6bbc-4c59-a9e8-ffcfb468de43.png" width="100%" alt="效果图" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275647-5f33d270-eef2-444a-a763-d6d88aa5d400.png" width="100%" alt="效果图" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275656-05a97794-b709-4253-ae1d-4869a406690c.png" width="100%" alt="效果图" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275674-6b9a903f-b270-4796-b55e-af809d677c26.png" width="100%" alt="效果图" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275683-8061c6a3-16d7-4455-bb13-685e56f43a9e.png" width="100%" alt="效果图" height="" />
+<img src="https://user-images.githubusercontent.com/35321279/173275690-5a26b6a1-6512-4e6b-b26a-314832f7e839.png" width="100%" alt="效果图" height="" />
 </div>
 
 
