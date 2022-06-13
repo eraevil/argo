@@ -26,3 +26,8 @@
 7|cesuim|—|基于 WebGL 的 JavaScript 框架，显示三维地球影像和地图
 8|echarts|—|完成图表可视化
 9|jquery|—|JavaScript 框架
+
+> 构建项目
+```
+python manage.py runserver
+```
